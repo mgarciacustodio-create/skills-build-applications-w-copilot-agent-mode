@@ -15,7 +15,7 @@ function Workouts() {
     <ResourceList
       columns={columns}
       description="A good plan meets you where you are. Pick a session and get moving."
-      endpoint="workouts"
+      apiPath="/api/workouts/"
       title="Workouts"
     />
   )

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { API_BASE_URL, normalizeCollection } from '../api.js'
 
-function ResourceList({ endpoint, title, description, columns }) {
+function ResourceList({ apiPath, title, description, columns }) {
+  const resource = apiPath.split('/').filter(Boolean).at(-1)
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
@@ -15,7 +16,7 @@ function ResourceList({ endpoint, title, description, columns }) {
       setError('')
 
       try {
-        const response = await fetch(`${API_BASE_URL}/api/${endpoint}/`, {
+        const response = await fetch(`${API_BASE_URL}${apiPath}`, {
           signal: controller.signal,
         })
         if (!response.ok) throw new Error(`Request failed with status ${response.status}`)
@@ -33,10 +34,10 @@ function ResourceList({ endpoint, title, description, columns }) {
 
     loadItems()
     return () => controller.abort()
-  }, [endpoint, reloadToken])
+  }, [apiPath, reloadToken])
 
   return (
-    <section className="collection-view" aria-labelledby={`${endpoint}-heading`}>
+    <section className="collection-view" aria-labelledby={`${resource}-heading`}>
       <div className="collection-kicker">
         <span>OCTOFIT / TRACKER</span>
         <span className="collection-kicker-line" />
@@ -45,7 +46,7 @@ function ResourceList({ endpoint, title, description, columns }) {
 
       <div className="collection-heading">
         <div>
-          <h1 id={`${endpoint}-heading`}>{title}</h1>
+          <h1 id={`${resource}-heading`}>{title}</h1>
           <p>{description}</p>
         </div>
         <div className="record-count" aria-live="polite">
@@ -90,7 +91,7 @@ function ResourceList({ endpoint, title, description, columns }) {
                 </tr>
               ) : items.length ? (
                 items.map((item, index) => (
-                  <tr key={item.id ?? item._id ?? `${endpoint}-${index}`}>
+                  <tr key={item.id ?? item._id ?? `${resource}-${index}`}>
                     {columns.map((column) => (
                       <td key={column.key}>
                         {column.render ? column.render(item, index) : item[column.key] ?? '—'}
@@ -113,7 +114,7 @@ function ResourceList({ endpoint, title, description, columns }) {
       <div className="collection-footnote">
         <span className="live-indicator" aria-hidden="true" />
         <span>{isLoading ? 'Syncing with API' : 'Synced with API'}</span>
-        <span className="footnote-end">/{endpoint}/</span>
+        <span className="footnote-end">{apiPath}</span>
       </div>
     </section>
   )

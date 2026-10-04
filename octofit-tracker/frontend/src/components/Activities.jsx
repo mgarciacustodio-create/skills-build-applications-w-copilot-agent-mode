@@ -12,7 +12,7 @@ function Activities() {
     <ResourceList
       columns={columns}
       description="Every effort adds up. Review the latest movement logged by your community."
-      endpoint="activities"
+      apiPath="/api/activities/"
       title="Activities"
     />
   )

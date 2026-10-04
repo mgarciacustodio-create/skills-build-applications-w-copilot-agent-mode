@@ -15,7 +15,7 @@ function Leaderboard() {
     <ResourceList
       columns={columns}
       description="Small wins, added together. See who is setting the pace this week."
-      endpoint="leaderboard"
+      apiPath="/api/leaderboard/"
       title="Leaderboard"
     />
   )

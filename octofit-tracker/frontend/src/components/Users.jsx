@@ -11,7 +11,7 @@ function Users() {
     <ResourceList
       columns={columns}
       description="Meet the athletes showing up, putting in the work, and getting stronger."
-      endpoint="users"
+      apiPath="/api/users/"
       title="Athletes"
     />
   )

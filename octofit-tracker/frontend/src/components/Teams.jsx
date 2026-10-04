@@ -10,7 +10,7 @@ function Teams() {
     <ResourceList
       columns={columns}
       description="Find your people, build a rhythm, and move a little further together."
-      endpoint="teams"
+      apiPath="/api/teams/"
       title="Teams"
     />
   )
